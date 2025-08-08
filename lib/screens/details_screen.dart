@@ -28,7 +28,7 @@ class DetailsScreen extends StatelessWidget {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                // TODO: Implement Navigator.pop
+                Navigator.pop(context);
               },
               child: const Text('Go Back'),
             ),

@@ -20,14 +20,14 @@ class SelectionScreen extends StatelessWidget {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                // TODO: Pop the screen and return 'Option 1'
+                Navigator.pop(context, 'Option 1');
               },
               child: const Text('Option 1'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // TODO: Pop the screen and return 'Option 2'
+                Navigator.pop(context, 'Option 2');
               },
               child: const Text('Option 2'),
             ),

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:navigatorr/screens/details_screen.dart';
+import 'package:navigatorr/screens/home_screen.dart';
+import 'package:navigatorr/screens/unknown_screen.dart';
+import 'package:navigatorr/theme/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,35 +15,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Navigation Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        scaffoldBackgroundColor: const Color(0xFFF0F2F5),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.indigo,
-          elevation: 0,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          iconTheme: IconThemeData(color: Colors.white),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.indigo,
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-            textStyle: const TextStyle(fontSize: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                12,
-              ),
-            ),
-          ),
-        ),
-      ),
-      home: Placeholder(),
+      theme: AppTheme.appTheme,
+
+      home: HomeScreen(),
+      onGenerateRoute: (settings) {
+        if (settings.name == '/details') {
+          final String itemId = settings.arguments as String;
+
+          return MaterialPageRoute(
+            builder: (context) {
+              return DetailsScreen(itemId: itemId);
+            },
+          );
+        }
+        return null;
+      },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(builder: (context) => const UnknownScreen());
+      },
     );
   }
 }

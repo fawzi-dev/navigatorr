@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:navigatorr/screens/details_screen.dart';
+import 'package:navigatorr/screens/selection_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -24,21 +26,39 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
-                  // TODO: Implement Navigator.push with MaterialPageRoute
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DetailsScreen(itemId: '123-Anonymous'),
+                    ),
+                  );
                 },
                 child: const Text('Push to Details (Anonymous)'),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  // TODO: Implement Navigator.pushNamed
+                  Navigator.pushNamed(
+                    context,
+                    '/details',
+                    arguments: '456-Named',
+                  );
                 },
                 child: const Text('Push to Details (Named)'),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {
-                  // TODO: Implement navigation to get data back
+                onPressed: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SelectionScreen()),
+                  );
+
+                  if (result != null && context.mounted) {
+                    ScaffoldMessenger.of(context)
+                      ..removeCurrentSnackBar()
+                      ..showSnackBar(SnackBar(content: Text('You selected: $result')));
+                  }
                 },
                 child: const Text('Get Data from Selection Screen'),
               ),
@@ -46,7 +66,7 @@ class HomeScreen extends StatelessWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.orange[700]),
                 onPressed: () {
-                  // TODO: Implement navigation to a route that doesn't exist
+                  Navigator.pushNamed(context, '/unknown');
                 },
                 child: const Text('Go to Unknown Route'),
               ),
